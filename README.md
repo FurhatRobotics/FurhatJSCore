@@ -8,14 +8,20 @@ NodeJS library for connecting to and operating FurhatOS (read more at: www.furha
 
 #### Table of Contents
 
--   [sayHello](#sayhello)
+-   [Furhat](#furhat)
+    -   [init](#init)
 
-### sayHello
+### Furhat
 
-This function says hello.
+Furhat class.
+
+#### init
+
+Initializes the furhat socket connection and executes the callback method.
 
 **Parameters**
 
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Some name to say hello for.
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The hello.
+-   `domain`  IP Address for furhatOS - localhost if SDK.
+-   `port`  port for RealTimeAPI module of furhatOS.
+-   `route`  route for RealTimeAPI module of furhatOS.
+-   `callback`  
