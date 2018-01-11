@@ -41,7 +41,6 @@ class Furhat {
     };
     this.socket.onmessage = event => {
       if (this.eventFunctions[JSON.parse(event.data).event_name] !== undefined) this.eventFunctions[JSON.parse(event.data).event_name](event);
-      // console.log(JSON.parse(event.data));
     };
     this.socket.onclose = event => {
       this.status = CLOSE;
