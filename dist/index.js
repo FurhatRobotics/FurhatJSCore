@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 const OPEN = 'open';
 const CLOSE = 'closed';
 const FAIL = 'failed';
-const EVENT = 'event';
 
 /**
  * Furhat main class. Maintains the websocket connection to furhatOS and
@@ -30,25 +29,27 @@ class Furhat {
     if (this.socket !== undefined) {
       this.socket.close();
     }
-    console.log(`initializing ws://${domain}:${port}/${route}`);
-    this.socket = new WebSocket(`ws://${domain}:${port}/${route}`);
+    console.log(`initializing ws://${domain}:${port}/${route}`); // eslint-disable-line no-console
+    this.socket = new window.WebSocket(`ws://${domain}:${port}/${route}`); // eslint-disable-line no-undef
 
-    this.socket.onopen = event => {
+    this.socket.onopen = () => {
       this.status = OPEN;
       if (callback !== undefined) {
         callback(OPEN, this);
       }
     };
     this.socket.onmessage = event => {
-      if (this.eventFunctions[JSON.parse(event.data).event_name] !== undefined) this.eventFunctions[JSON.parse(event.data).event_name](event);
+      if (this.eventFunctions[JSON.parse(event.data).event_name] !== undefined) {
+        this.eventFunctions[JSON.parse(event.data).event_name](event);
+      }
     };
-    this.socket.onclose = event => {
+    this.socket.onclose = () => {
       this.status = CLOSE;
       if (callback !== undefined) {
         callback(CLOSE, this);
       }
     };
-    this.socket.onerror = event => {
+    this.socket.onerror = () => {
       this.status = FAIL;
       if (callback !== undefined) {
         callback(FAIL, this);
@@ -72,8 +73,9 @@ class Furhat {
    * Subscribes to the given event and triggers the supplied callback on event
    * @param eventName Name of the event to subscribe
    * @param callback Function which needs to be triggered when the given event is recieved
-   * @param dontSend [Optional] [false by default] Boolean which determines wheter to send the subscribe event or not. use 
-   * it to set callbacks for event that are already subscribed to, for instance with group subscriptions
+   * @param dontSend [Optional] [false by default] Boolean which determines wether to send
+   * the subscribe event or not. use it to set callbacks for event that are already subscribed to,
+   * for instance with group subscriptions
    */
   subscribe(eventName, callback, dontSend = false) {
     const event = { event_name: 'furhatos.event.actions.ActionRealTimeAPISubscribe', name: eventName };
@@ -104,9 +106,8 @@ class Furhat {
   /**
    * Stimulates the speech of a user in the interaction space
    * @param text Text which needs to be said by the user
-   * @param user ID of the user whose speech needs to be stimulated
    */
-  userSpeech(text, user) {
+  userSpeech(text) {
     const event = { event_name: 'furhatos.event.senses.SenseTypingEnd', messageText: text };
     this.send(event);
   }

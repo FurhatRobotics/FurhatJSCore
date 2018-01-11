@@ -1,6 +1,26 @@
 # FurhatJSCore
 
-NodeJS library for connecting to and operating FurhatOS (read more at: www.furhatrobotics.com)
+Client library for connecting to and operating FurhatOS (read more at: www.furhatrobotics.com)
+
+## Usage
+
+Install using:
+
+    npm install furhat-core
+
+Import (ES6 import syntax) using:
+
+    import Furhat from 'furhat-core'
+
+Initialize the connection:
+
+    let furhat = new Furhat()
+
+    furhat.init('localhost', '80', 'api', (status, hat) => {
+        if (status === 'open') {
+            hat.say('I am connected!')
+        }
+    })
 
 ## API
 
@@ -51,8 +71,9 @@ Subscribes to the given event and triggers the supplied callback on event
 
 -   `eventName`  Name of the event to subscribe
 -   `callback`  Function which needs to be triggered when the given event is recieved
--   `dontSend`  [Optional][false by default] Boolean which determines wheter to send the subscribe event or not. use 
-    it to set callbacks for event that are already subscribed to, for instance with group subscriptions
+-   `dontSend`  [Optional][false by default] Boolean which determines wether to send
+    the subscribe event or not. use it to set callbacks for event that are already subscribed to,
+    for instance with group subscriptions
 
 #### subscribeGroup
 
@@ -77,7 +98,6 @@ Stimulates the speech of a user in the interaction space
 **Parameters**
 
 -   `text`  Text which needs to be said by the user
--   `user`  ID of the user whose speech needs to be stimulated
 
 #### userSpeechStart
 

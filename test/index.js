@@ -1,5 +1,3 @@
-import Furhat from '../src'
-
 describe('sayHello', () => {
   it('returns hello', () => {
     // expect(sayHello()).toBe('Hello, Haz!')

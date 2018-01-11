@@ -24,8 +24,8 @@ class Furhat {
     if (this.socket !== undefined) {
       this.socket.close()
     }
-    console.log(`initializing ws://${domain}:${port}/${route}`)
-    this.socket = new WebSocket(`ws://${domain}:${port}/${route}`)
+    console.log(`initializing ws://${domain}:${port}/${route}`) // eslint-disable-line no-console
+    this.socket = new window.WebSocket(`ws://${domain}:${port}/${route}`) // eslint-disable-line no-undef
 
     this.socket.onopen = () => {
       this.status = OPEN
