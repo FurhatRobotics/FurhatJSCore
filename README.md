@@ -10,10 +10,19 @@ NodeJS library for connecting to and operating FurhatOS (read more at: www.furha
 
 -   [Furhat](#furhat)
     -   [init](#init)
+    -   [send](#send)
+    -   [subscribe](#subscribe)
+    -   [subscribeGroup](#subscribegroup)
+    -   [say](#say)
+    -   [userSpeech](#userspeech)
+    -   [userSpeechStart](#userspeechstart)
+    -   [gesture](#gesture)
 
 ### Furhat
 
-Furhat class.
+Furhat main class. Maintains the websocket connection to furhatOS and
+has methods to send events, subscribe to events and helper methods such as say,
+gesture, etc.
 
 #### init
 
@@ -24,4 +33,60 @@ Initializes the furhat socket connection and executes the callback method.
 -   `domain`  IP Address for furhatOS - localhost if SDK.
 -   `port`  port for RealTimeAPI module of furhatOS.
 -   `route`  route for RealTimeAPI module of furhatOS.
--   `callback`  
+-   `callback`  callback method to be executed on successful opening of websocket.
+
+#### send
+
+Sends an event to furhatOS
+
+**Parameters**
+
+-   `event`  Object containing the event. Mandtory to have event_name parameter in the object
+
+#### subscribe
+
+Subscribes to the given event and triggers the supplied callback on event
+
+**Parameters**
+
+-   `eventName`  Name of the event to subscribe
+-   `callback`  Function which needs to be triggered when the given event is recieved
+-   `dontSend`  [Optional][false by default] Boolean which determines wheter to send the subscribe event or not. use 
+    it to set callbacks for event that are already subscribed to, for instance with group subscriptions
+
+#### subscribeGroup
+
+Subscribes to the given event group
+
+**Parameters**
+
+-   `groupNumber`  Number(Assigned ENUM) of the group that needs to be subscribed to
+
+#### say
+
+Says a given text
+
+**Parameters**
+
+-   `text`  Text which needs to be said by Furhat
+
+#### userSpeech
+
+Stimulates the speech of a user in the interaction space
+
+**Parameters**
+
+-   `text`  Text which needs to be said by the user
+-   `user`  ID of the user whose speech needs to be stimulated
+
+#### userSpeechStart
+
+Stimulates SenseSpeechStart event. Can be used to stimulate user speech via typing
+
+#### gesture
+
+Performs the given gesture
+
+**Parameters**
+
+-   `name`  Name of the gesture that needs to be performed

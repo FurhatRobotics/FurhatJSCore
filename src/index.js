@@ -1,5 +1,3 @@
-// @flow
-
 // Constants
 const OPEN = 'open';
 const CLOSE = 'closed';
@@ -7,7 +5,9 @@ const FAIL = 'failed';
 const EVENT = 'event';
 
 /**
- * Furhat class.
+ * Furhat main class. Maintains the websocket connection to furhatOS and
+ * has methods to send events, subscribe to events and helper methods such as say,
+ * gesture, etc.
  */
 class Furhat {
   constructor() {
@@ -19,6 +19,7 @@ class Furhat {
      * @param domain IP Address for furhatOS - localhost if SDK.
      * @param port port for RealTimeAPI module of furhatOS.
      * @param route route for RealTimeAPI module of furhatOS.
+     * @param callback callback method to be executed on successful opening of websocket.
      */
   init(domain, port, route, callback) {
     if (this.socket !== undefined) {
@@ -52,6 +53,10 @@ class Furhat {
     };
   }
 
+    /**
+     * Sends an event to furhatOS
+     * @param event Object containing the event. Mandtory to have event_name parameter in the object
+     */
   send(event) {
     if (this.socket.readyState === 2 || this.socket.readyState === 3) {
       // SHIT
@@ -60,13 +65,13 @@ class Furhat {
     }
   }
 
-  sendEvent(event) {
-    if (event.event_name === undefined) {
-      event.event_name = 'furhatos.event.CustomEvent'
-    }
-    this.send(event);
-  }
-
+    /**
+     * Subscribes to the given event and triggers the supplied callback on event
+     * @param eventName Name of the event to subscribe
+     * @param callback Function which needs to be triggered when the given event is recieved
+     * @param dontSend [Optional] [false by default] Boolean which determines wheter to send the subscribe event or not. use 
+     * it to set callbacks for event that are already subscribed to, for instance with group subscriptions
+     */
   subscribe(eventName, callback, dontSend = false) {
     const event = { event_name: 'furhatos.event.actions.ActionRealTimeAPISubscribe', name: eventName };
     this.eventFunctions[eventName] = callback;
@@ -75,26 +80,46 @@ class Furhat {
     }
   }
 
+    /**
+     * Subscribes to the given event group
+     * @param groupNumber Number(Assigned ENUM) of the group that needs to be subscribed to
+     */
   subscribeGroup(groupNumber) {
     const event = { event_name: 'furhatos.event.actions.ActionRealTimeAPISubscribe', group: groupNumber };
     this.send(event);
   }
 
+    /**
+     * Says a given text
+     * @param text Text which needs to be said by Furhat
+     */
   say(text) {
     const event = { event_name: 'furhatos.event.actions.ActionSpeech', text };
     this.send(event);
   }
 
+    /**
+     * Stimulates the speech of a user in the interaction space
+     * @param text Text which needs to be said by the user
+     * @param user ID of the user whose speech needs to be stimulated
+     */
   userSpeech(text, user) {
     const event = { event_name: 'furhatos.event.senses.SenseTypingEnd', messageText: text };
     this.send(event);
   }
 
+    /**
+     * Stimulates SenseSpeechStart event. Can be used to stimulate user speech via typing
+     */
   userSpeechStart() {
     const event = { event_name: 'furhatos.event.senses.SenseTypingStart' };
     this.send(event);
   }
 
+    /**
+     * Performs the given gesture
+     * @param name Name of the gesture that needs to be performed
+     */
   gesture(name) {
     const event = { event_name: 'furhatos.event.actions.ActionGesture', name };
     this.send(event);
