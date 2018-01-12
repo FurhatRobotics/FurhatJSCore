@@ -40,7 +40,7 @@ class Furhat {
     };
     this.socket.onmessage = event => {
       if (this.eventFunctions[JSON.parse(event.data).event_name] !== undefined) {
-        this.eventFunctions[JSON.parse(event.data).event_name](event);
+        this.eventFunctions[JSON.parse(event.data).event_name](JSON.parse(event.data));
       }
     };
     this.socket.onclose = () => {
