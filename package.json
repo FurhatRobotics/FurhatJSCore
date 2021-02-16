@@ -27,17 +27,8 @@
     "patch": "npm version patch && npm publish",
     "minor": "npm version minor && npm publish",
     "major": "npm version major && npm publish",
-    "prepublish": "npm run lint && npm test && npm run build",
+    "prepublish": "npm test && npm run build",
     "postpublish": "git push origin master --follow-tags"
-  },
-  "watch": {
-    "test": "{src,test}/*.js",
-    "lint": "{src,test}/*.js",
-    "build": "src"
-  },
-  "jest": {
-    "testRegex": "/test/.*",
-    "testEnvironment": "node"
   },
   "keywords": [
     "furhat-core"
