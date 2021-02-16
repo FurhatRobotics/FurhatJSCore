@@ -44,16 +44,16 @@ Furhat main class. Maintains the websocket connection to furhatOS and
 has methods to send events, subscribe to events and helper methods such as say,
 gesture, etc.
 
-#### init
-
-Initializes the furhat socket connection and executes the callback method.
-
 **Parameters**
 
 -   `domain`  IP Address for furhatOS - localhost if SDK.
 -   `port`  port for RealTimeAPI module of furhatOS.
 -   `route`  route for RealTimeAPI module of furhatOS.
--   `callback`  callback method to be executed on successful opening of websocket.
+
+#### init
+
+Initializes the connection and return a promise. Await for the promise to resolve before
+using the object
 
 #### send
 

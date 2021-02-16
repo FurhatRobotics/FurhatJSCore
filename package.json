@@ -1,14 +1,14 @@
 {
   "name": "furhat-core",
-  "version": "0.0.4",
-  "description": "NodeJS library for connecting to and operating FurhatOS (read more at: www.furhatrobotics.com)",
+  "version": "0.1.0",
+  "description": "JS library for connecting to and operating FurhatOS (read more at: www.furhatrobotics.com)",
   "license": "MIT",
   "repository": "FurhatRobotics/FurhatJSCore",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": {
     "name": "subbu",
     "email": "subbu@furhatrobotics.com",
-    "url": "github.com/FurhatRobotics"
+    "url": "https://github.com/FurhatRobotics"
   },
   "engines": {
     "node": ">=6"
@@ -18,16 +18,12 @@
     "index.js"
   ],
   "scripts": {
-    "test": "jest",
-    "coverage": "npm test -- --coverage",
-    "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src test",
-    "flow": "flow check",
-    "docs": "documentation readme src --section=API",
+    "lint": "eslint src --ext .ts",
+    "docs": "documentation readme dist/index.js --section=API",
     "clean": "rimraf dist",
-    "prebuild": "npm run docs && npm run clean",
-    "build": "babel src -d dist",
-    "watch": "npm-watch",
+    "prebuild": "npm run clean",
+    "build": "tsc && npm run docs",
+    "watch": "tsc -w",
     "patch": "npm version patch && npm publish",
     "minor": "npm version minor && npm publish",
     "major": "npm version major && npm publish",
@@ -48,22 +44,11 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-eslint": "^8.0.0",
-    "babel-jest": "^21.0.2",
-    "babel-preset-env": "^1.1.8",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-stage-2": "^6.18.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
     "documentation": "^5.3.2",
-    "eslint": "^4.0.0",
-    "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-flowtype": "^2.29.2",
-    "eslint-plugin-flowtype-errors": "^3.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "flow-bin": "^0.54.1",
-    "jest-cli": "^21.1.0",
-    "npm-watch": "^0.2.0",
-    "opn-cli": "^3.1.0",
-    "rimraf": "^2.6.1"
+    "eslint": "^4.19.1",
+    "rimraf": "^2.6.1",
+    "typescript": "^4.1.5"
   }
 }
