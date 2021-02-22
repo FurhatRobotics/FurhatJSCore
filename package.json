@@ -1,6 +1,6 @@
 {
   "name": "furhat-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "JS library for connecting to and operating FurhatOS (read more at: www.furhatrobotics.com)",
   "license": "MIT",
   "repository": "FurhatRobotics/FurhatJSCore",
