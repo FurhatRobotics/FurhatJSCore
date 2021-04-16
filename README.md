@@ -14,13 +14,31 @@ Import (ES6 import syntax) using:
 
 Initialize the connection:
 
-    let furhat = new Furhat()
+    let furhat = new Furhat('localhost', 80, 'api')
 
-    furhat.init('localhost', '80', 'api', (status, hat) => {
-        if (status === 'open') {
-            hat.say('I am connected!')
+    furhat.init()
+      .then(({error, message}) => {
+        if(error) {
+          console.log('Something went wrong:', message)
+          return
         }
-    })
+        
+        furhat.say('I am connected!')
+      })
+      .catch(({error, message}) => console.log('Something went wrong:', message))
+      
+    // or you can use the async/await syntax
+    try {
+      const {error, message} = await furhat.init()
+      if(error) {
+        console.log('Something went wrong:', message)
+        return
+      }
+      
+      furhat.say('I am connected!')
+    } catch({error, message}) {
+      console.log('Something went wrong:', message)
+    }
 
 ## API
 
